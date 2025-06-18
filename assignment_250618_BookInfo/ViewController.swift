@@ -9,13 +9,22 @@ import UIKit
 import SnapKit
 
 class ViewController: UIViewController {
+    
+    private var titleLabel = UILabel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print("잘되냐?")
+        
+        configureUI()
+    }
+    
+    private func configureUI() {
+        
     }
 
 
 }
+
+
 
