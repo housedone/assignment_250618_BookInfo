@@ -9,38 +9,25 @@ import UIKit
 import SnapKit
 
 class ViewController: UIViewController {
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
-        
-        configureUI()
-    }
-    
     private var bookList: [Book] = []
     
     private let dataService = DataService()
     
-    func loadBooks() {
-        dataService.loadBooks { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .success(let books):
-                bookList = books
-                print("책 정보 불러왔음")
-            case .failure(let error):
-                print("🚨 에러 : \(error)")
-            }
-        }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.backgroundColor = .systemBackground
+        
+        configureUI()
     }
+    
+    
     
     // 기본적으로 0번째 항목의 내용을 출력. 6번째까지 있음 (+= 1 하자)
     // 버튼을 누르면 출력되는 내용이 달라져야 함
     
     private func configureUI() {
-        view.backgroundColor = .systemBackground
+        
         
         loadBooks()
         
@@ -142,5 +129,19 @@ class ViewController: UIViewController {
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
         }
     
+    }
+    
+    func loadBooks() {
+        dataService.loadBooks { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let books):
+                bookList = books
+                print("책 정보 불러왔음")
+            case .failure(let error):
+                print("🚨 에러 : \(error)")
+            }
+        }
     }
 }
