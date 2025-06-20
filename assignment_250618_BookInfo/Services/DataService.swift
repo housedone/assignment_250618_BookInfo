@@ -9,12 +9,8 @@ import Foundation
 
 class DataService {
     
-    enum DataError: Error {
-        case fileNotFound
-        case parsingFailed
-    }
-    
-    /// 책을 불러오는 함수. 성공하면 [Book], 실패하면 Error 타입 리턴
+    /// 책을 불러오는 함수.
+    /// 성공하면 [Book], 실패하면 Error 타입 리턴
     func loadBooks(completion: @escaping (Result<[Book], Error>) -> Void) {
         // completion : 클로저 파라미터. 결과가 준비되었을 때 호출된다.
         // @escaping : 이 클로저는 함수가 끝난 뒤에도 호출될 수 있기 때문에 escape 가능성을 명시한다.
