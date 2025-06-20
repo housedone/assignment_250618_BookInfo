@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class MainView: UIView {
+class MainView: UIView, HeaderViewDelegate {
     
     private var books: [Book] = []
     private var selectedBookVolumeNumber: Int = 0
@@ -20,7 +20,7 @@ class MainView: UIView {
         
         backgroundColor = .systemBackground
         
-        // delegate 알아보기
+        headerView.delegate = self
         
         addSubview(headerView)
         addSubview(contentView)
@@ -55,7 +55,8 @@ class MainView: UIView {
         }
     }
     
-    
-    
-    
+    func didTapSeriesButton(bookVolumeNumber: Int) {
+        selectedBookVolumeNumber = bookVolumeNumber
+        configureView(books: books)
+    }
 }

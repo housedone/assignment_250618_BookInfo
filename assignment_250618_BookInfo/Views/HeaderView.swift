@@ -8,9 +8,13 @@
 import UIKit
 import SnapKit
 
-
+protocol HeaderViewDelegate: AnyObject {
+    func didTapSeriesButton(bookVolumeNumber: Int)
+}
 
 class HeaderView: UIView {
+    
+    weak var delegate: HeaderViewDelegate?
     
     private let topTitleLabel = UILabel()
     private let seriesButtonStackView = UIStackView()
@@ -50,12 +54,13 @@ class HeaderView: UIView {
         
         seriesButtonStackView.snp.makeConstraints {
             $0.top.equalTo(topTitleLabel.snp.bottom).offset(16)
+            $0.bottom.equalToSuperview()
             $0.centerX.equalToSuperview()
         }
     }
     
-    func configureView(_ books: [Book], _ selectedBookVolumeNumber: Int) {
-        topTitleLabel.text = books[selectedBookVolumeNumber].title
+    func configureView(_ books: [Book], _ bookVolumeNumber: Int) {
+        topTitleLabel.text = books[bookVolumeNumber].title
         
         seriesButtonStackView.arrangedSubviews.forEach { $0.removeFromSuperview() } // 갱신하며 기존 서브뷰 제거
         
@@ -63,8 +68,8 @@ class HeaderView: UIView {
             let seriesButton = UIButton()
             seriesButton.setTitle("\(index + 1)", for: .normal)
             seriesButton.titleLabel?.font = .systemFont(ofSize: 16)
-            seriesButton.setTitleColor(index == selectedBookVolumeNumber ? .white : .systemBlue, for: .normal)
-            seriesButton.backgroundColor = index == selectedBookVolumeNumber ? .systemBlue : .systemGray6
+            seriesButton.setTitleColor(index == bookVolumeNumber ? .white : .systemBlue, for: .normal)
+            seriesButton.backgroundColor = index == bookVolumeNumber ? .systemBlue : .systemGray6
             seriesButton.tag = index
             seriesButton.layer.cornerRadius = 20
             seriesButton.addTarget(self, action: #selector(seriesButtonTapped), for: .touchUpInside)
@@ -77,8 +82,9 @@ class HeaderView: UIView {
         }
     }
     
-    @objc private func seriesButtonTapped(_ sender: UIButton) {
-        //
+    @objc
+    func seriesButtonTapped(_ sender: UIButton) {
+        delegate?.didTapSeriesButton(bookVolumeNumber: sender.tag)
     }
     
 }

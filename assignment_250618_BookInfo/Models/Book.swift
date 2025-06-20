@@ -19,11 +19,16 @@ struct Book: Codable {
     var title: String
     var author: String
     var pages: Int
-    var release_date: String
+    var releaseDate: String
     var dedication: String
     var summary: String
     var wiki: String
     var chapters: [Chapter]
+    
+    enum CodingKeys: String, CodingKey {
+        case title, author, pages, dedication, summary, wiki, chapters
+        case releaseDate = "release_date"
+    }
 }
 
 struct Chapter: Codable {
