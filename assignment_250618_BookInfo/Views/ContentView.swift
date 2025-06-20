@@ -30,7 +30,7 @@ class ContentView: UIView {
         
         addSubview(scrollView)
         contentStackView.axis = .vertical
-        contentStackView.spacing = 8
+        contentStackView.spacing = 24
         
     }
     
@@ -52,10 +52,11 @@ class ContentView: UIView {
         contentStackView.arrangedSubviews.forEach { $0.removeFromSuperview() } // 갱신하며 기존 서브뷰 제거
         
         let contentStack: [UIView] = [
-            // 책 정보 호라이즌탈 스택 뷰 - 이미지, (책 제목, 저자, 발매일, 페이지수)
-            createBookBasicInfoStack(book, bookVolumeNumber)
+            createBookBasicInfoStack(book, bookVolumeNumber),
+            createDedicationStack("Dedication", book.dedication),
             
-            // Dedication 버티컬 스택 뷰
+            
+            
             // Summary 버티컬 스택 뷰
             // Chapters 버티컬 스택 뷰
             
@@ -66,7 +67,8 @@ class ContentView: UIView {
         }
     }
     
-    func createBookBasicInfoStack(_ book: Book, _ bookVolumeNumber: Int) -> UIStackView {
+    // 책 정보 호라이즌탈 스택 뷰 - 이미지, (책 제목, 저자, 발매일, 페이지수)
+    private func createBookBasicInfoStack(_ book: Book, _ bookVolumeNumber: Int) -> UIStackView {
         // 책 표지 구성
         let bookCoverImageView = UIImageView()
         bookCoverImageView.image = UIImage(named: "harrypotter\(bookVolumeNumber + 1)")
@@ -103,7 +105,7 @@ class ContentView: UIView {
         return bookInfoStackView
     }
     
-    func createInfoRow(_ title: String, _ value: String) -> UIStackView {
+    private func createInfoRow(_ title: String, _ value: String) -> UIStackView {
         let titleLabel = UILabel()
         titleLabel.text = title
         titleLabel.font = .boldSystemFont(ofSize: title == "Author" ? 16 : 14)
@@ -120,6 +122,25 @@ class ContentView: UIView {
         hStack.spacing = 8
         hStack.alignment = .leading
         return hStack
+    }
+    
+    // Dedication 버티컬 스택 뷰
+    private func createDedicationStack(_ title: String, _ value: String) -> UIStackView {
+        let titleLabel = UILabel()
+        titleLabel.text = title
+        titleLabel.font = .boldSystemFont(ofSize: 18)
+        titleLabel.textColor = .black
+        
+        let valueLabel = UILabel()
+        valueLabel.text = value
+        valueLabel.font = .systemFont(ofSize: 14)
+        valueLabel.textColor = .darkGray
+        valueLabel.numberOfLines = 0
+        
+        let dedicationStack = UIStackView(arrangedSubviews: [titleLabel, valueLabel])
+        dedicationStack.axis = .vertical
+        dedicationStack.spacing = 8
+        return dedicationStack
     }
     
 }
