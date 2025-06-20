@@ -13,7 +13,7 @@ class MainView: UIView {
     private var books: [Book] = []
     private var selectedBookVolumeNumber: Int = 0
     private let headerView = HeaderView()
-    //private let contentsView = ContentsView()
+    //private let contentView = ContentView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,7 +23,7 @@ class MainView: UIView {
         // delegate 알아보기
         
         addSubview(headerView)
-        //addSubview(contentsView)
+        //addSubview(contentView)
         
         setupHeaderAndContentsConstraints()
         
@@ -38,7 +38,7 @@ class MainView: UIView {
     func configureView(books: [Book]) {
         self.books = books
         headerView.configureView(books, selectedBookVolumeNumber)
-        //contentsView.configureView(books[selectedBookVolumeNumber], selectedBookVolumeNumber)
+        //contentView.configureView(books[selectedBookVolumeNumber], selectedBookVolumeNumber)
     }
     
     /// 헤더 뷰와 컨텐츠 뷰의 제약 설정
@@ -48,7 +48,7 @@ class MainView: UIView {
             $0.leading.trailing.equalTo(safeAreaLayoutGuide).inset(20)
         }
         
-//        contentsView.snp.makeConstraints {
+//        contentView.snp.makeConstraints {
 //            $0.top.equalTo(headerView.snp.bottom).offset(10)
 //            $0.leading.trailing.equalTo(safeAreaLayoutGuide).inset(20)
 //        }
