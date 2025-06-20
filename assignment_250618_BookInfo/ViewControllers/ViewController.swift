@@ -13,8 +13,6 @@ class ViewController: UIViewController {
     private let dataService = DataService()
     private let mainView = MainView()
     
-    // MARK: - 라이프사이클
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,10 +34,7 @@ class ViewController: UIViewController {
             switch result {
             case .success(let books):
                 print("책 정보 불러왔음")
-                
-                DispatchQueue.main.async {
-                    self.mainView.configureView(books: books)
-                }
+                DispatchQueue.main.async { self.mainView.configureView(books: books) }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -77,9 +72,6 @@ class ViewController: UIViewController {
 
 
 
-
-
-
     
     /*
     
@@ -89,22 +81,10 @@ class ViewController: UIViewController {
     
     
     // UI 컴포넌트들
-    private var titleLabel: UILabel!
-    private var numberButton: UIButton!
     private var bookCoverImageView: UIImageView!
     private var bookTitleLabel: UILabel!
     
 
-    // MARK: - 라이프사이클
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        view.backgroundColor = .systemBackground
-        
-        loadBooks() // 책이 불러와지면 UI 구성함
-        
-    }
     
     
     
@@ -112,37 +92,7 @@ class ViewController: UIViewController {
     
     private func configureUI() {
         
-        // 제목 라벨 구성 - 정렬: 가운데, 폰트: 사이즈 24, 시스템볼드
-        titleLabel = UILabel()
-        titleLabel.text = books[0].title
-        titleLabel.textAlignment = .center
-        titleLabel.font = .boldSystemFont(ofSize: 24)
-        titleLabel.numberOfLines = 2
-        titleLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(300)
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(10)
-        }
         
-        // 시리즈 순서 버튼 구성 - 정렬: 가운데, 폰트: 사이즈 16, 원형, 백그라운드색상: 시스템블루
-        numberButton = UIButton()
-        numberButton.setTitle("1", for: .normal)
-        numberButton.setTitleColor(.white, for: .normal)
-        numberButton.titleLabel?.textAlignment = .center
-        numberButton.titleLabel?.font = .systemFont(ofSize: 16) // 제목 라벨 아니고 버튼의 타이틀라벨 폰트 맞음
-        numberButton.layer.cornerRadius = 20
-        numberButton.backgroundColor = .systemBlue
-        numberButton.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(16)
-            $0.centerX.equalToSuperview()
-            $0.width.height.equalTo(40)
-        }
-        
-        */
-        
-        
-        
-        /*
         // 책 표지 구성
         bookCoverImageView = UIImageView()
         bookCoverImageView.image = UIImage(named: "harrypotter1.jpg")
@@ -212,4 +162,4 @@ class ViewController: UIViewController {
     
     }
 }
-         */
+        */

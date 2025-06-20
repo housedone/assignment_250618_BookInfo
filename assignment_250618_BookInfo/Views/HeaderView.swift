@@ -12,13 +12,13 @@ import SnapKit
 
 class HeaderView: UIView {
     
-    private let titleLabel = UILabel()
+    private let topTitleLabel = UILabel()
     private let seriesButtonStackView = UIStackView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setupUI()
+        setupViews()
         setupConstraints()
     }
     
@@ -27,13 +27,13 @@ class HeaderView: UIView {
     }
     
     
-    private func setupUI() {
-        addSubview(titleLabel)
+    private func setupViews() {
+        addSubview(topTitleLabel)
         addSubview(seriesButtonStackView)
         
-        titleLabel.font = .boldSystemFont(ofSize: 24)
-        titleLabel.textAlignment = .center
-        titleLabel.numberOfLines = 0
+        topTitleLabel.font = .boldSystemFont(ofSize: 24)
+        topTitleLabel.textAlignment = .center
+        topTitleLabel.numberOfLines = 0
         
         seriesButtonStackView.axis = .horizontal
         seriesButtonStackView.spacing = 8
@@ -43,21 +43,21 @@ class HeaderView: UIView {
     }
     
     private func setupConstraints() {
-        titleLabel.snp.makeConstraints {
+        topTitleLabel.snp.makeConstraints {
             $0.top.equalToSuperview() // 헤더 뷰 탑 제약이 10이 이미 있으므로
             $0.leading.trailing.equalToSuperview()
         }
         
         seriesButtonStackView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(16)
+            $0.top.equalTo(topTitleLabel.snp.bottom).offset(16)
             $0.centerX.equalToSuperview()
         }
     }
     
     func configureView(_ books: [Book], _ selectedBookVolumeNumber: Int) {
-        titleLabel.text = books[selectedBookVolumeNumber].title
+        topTitleLabel.text = books[selectedBookVolumeNumber].title
         
-        seriesButtonStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        seriesButtonStackView.arrangedSubviews.forEach { $0.removeFromSuperview() } // 갱신하며 기존 서브뷰 제거
         
         for index in 0..<books.count {
             let seriesButton = UIButton()
