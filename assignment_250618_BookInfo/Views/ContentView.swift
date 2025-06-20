@@ -39,12 +39,14 @@ class ContentView: UIView {
             $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview()
+            $0.width.equalToSuperview() // 이거 없으면 스크롤이 좌우로 된다!
         }
         
         contentStackView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview()
-            $0.width.equalToSuperview() // 이거 없으면 스크롤이 좌우로 된다!
+            $0.bottom.equalToSuperview() // 이거 없으면 위아래 스크롤도 안된다
+            $0.width.equalToSuperview()
         }
     }
     
@@ -54,12 +56,8 @@ class ContentView: UIView {
         let contentStack: [UIView] = [
             createBookBasicInfoStack(book, bookVolumeNumber),
             createDedicationStack("Dedication", book.dedication),
-            
-            
-            
-            // Summary 버티컬 스택 뷰
-            // Chapters 버티컬 스택 뷰
-            
+            createDedicationStack("Summary", book.summary),
+            createChapterStack("Chapter", book.chapters)
         ]
         
         contentStack.forEach {
@@ -90,7 +88,7 @@ class ContentView: UIView {
             bookTitleLabel,
             createInfoRow("Author", book.author),
             createInfoRow("Released", dateFormatterHelper(book.releaseDate)),
-            createInfoRow("Pages", "\(book.pages)")
+            createInfoRow("Pages", "\(book.pages)"),
         ])
         textStackView.axis = .vertical
         textStackView.spacing = 8
@@ -125,6 +123,7 @@ class ContentView: UIView {
     }
     
     // Dedication 버티컬 스택 뷰
+    // Summary 버티컬 스택 뷰
     private func createDedicationStack(_ title: String, _ value: String) -> UIStackView {
         let titleLabel = UILabel()
         titleLabel.text = title
@@ -143,4 +142,25 @@ class ContentView: UIView {
         return dedicationStack
     }
     
+    // Chapters 버티컬 스택 뷰
+    private func createChapterStack(_ title: String, _ value: [Chapter]) -> UIStackView {
+        let titleLabel = UILabel()
+        titleLabel.text = title
+        titleLabel.font = .boldSystemFont(ofSize: 18)
+        titleLabel.textColor = .black
+        
+        let chapterLabels: [UILabel] = value.map { chapter -> UILabel in
+            let label = UILabel()
+            label.text = chapter.title
+            label.font = .systemFont(ofSize: 14)
+            label.textColor = .darkGray
+            label.numberOfLines = 0
+            return label
+        }
+        
+        let chapterStack = UIStackView(arrangedSubviews: [titleLabel] + chapterLabels)
+        chapterStack.axis = .vertical
+        chapterStack.spacing = 8
+        return chapterStack
+    }
 }
