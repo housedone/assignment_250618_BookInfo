@@ -62,8 +62,14 @@
 
 ## **스크린샷**
 
-> <img width="568" alt="스크린샷 2025-06-23 20 48 14" src="https://github.com/user-attachments/assets/87331474-ad39-485f-be76-cd72708814e6" />
 
+| ![Simulator Screen Recording - iPhone 16 Pro - 2025-06-23 at 20 55 44](https://github.com/user-attachments/assets/7dbc72e4-b6ab-42d0-9d59-0fae4ccf9ae1) | ![Simulator Screen Recording - iPhone 13 mini - 2025-06-23 at 20 58 48](https://github.com/user-attachments/assets/7a7cbf31-dc16-407a-bea7-c56b24d8fbb0) |
+|:--:|:--:|
+| iPhone 16 Pro | iPhone 13 mini |
+
+| ![Simulator Screen Recording - iPhone 16 Pro - 2025-06-23 at 21 01 11](https://github.com/user-attachments/assets/409b7e83-7418-45b7-8438-3f3d8bf001e5) | ![Simulator Screen Recording - iPhone 16 Pro - 2025-06-23 at 21 02 03](https://github.com/user-attachments/assets/febc00c4-bed9-459d-b252-fc7ba9370226) |
+|:--:|:--:|
+| 데이터 파일이 없는 경우 | 파일은 있는데 내용을 불러오지 못한 경우 |
 
 ---
 
