@@ -8,39 +8,38 @@
 import UIKit
 import SnapKit
 
-/// Summary 버티컬 스택 뷰
-class SummaryView: UIStackView {
+/// 요약 뷰
+final class SummaryView: UIStackView {
     
+    // MARK: - Properties
     private let titleLabel = UILabel()
     private let valueLabel = UILabel()
     private let seeMoreButton = UIButton()
     
-    private let fullText: String
-    private let isExpandedKey: String
+    private var fullText: String = ""
+    private var isExpandedKey: String = ""
     
     private var isExpanded: Bool {
         get { UserDefaults.standard.bool(forKey: isExpandedKey) }
         set { UserDefaults.standard.set(newValue, forKey: isExpandedKey) }
     }
     
-    init(title: String, value: String, bookVolumeNumber: Int) {
-        self.fullText = value
-        self.isExpandedKey = "isExpanded_\(bookVolumeNumber)"
+    // MARK: - Initializer
+    init() {
         super.init(frame: .zero)
-        axis = .vertical
-        spacing = 8
-        
-        setupViews(title: title)
+        setupView()
         setupActions()
-        updateSummary()
     }
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupViews(title: String) {
-        titleLabel.text = title
+    // MARK: - Setup
+    private func setupView() {
+        axis = .vertical
+        spacing = 8
+        
         titleLabel.font = .boldSystemFont(ofSize: 18)
         titleLabel.textColor = .black
         
@@ -65,6 +64,16 @@ class SummaryView: UIStackView {
         }, for: .touchUpInside)
     }
     
+    // MARK: - Configuration
+    func configure(title: String, value: String, bookVolumeNumber: Int) {
+        self.fullText = value
+        self.isExpandedKey = "isExpanded_\(bookVolumeNumber)"
+        
+        titleLabel.text = title
+        updateSummary()
+    }
+    
+    // MARK: - 더보기 버튼
     private func updateSummary() {
         if fullText.count >= 450 {
             valueLabel.text = isExpanded ? fullText : String(fullText.prefix(450)) + "..."

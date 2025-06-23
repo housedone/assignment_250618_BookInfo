@@ -8,26 +8,34 @@
 import UIKit
 import SnapKit
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
     
+    // MARK: - Properties
     private let dataService = DataService()
     private let mainView = MainView()
+    private var books: [Book] = []
     
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.addSubview(mainView)
-        
-        mainView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        
+        setupView()
+        setupConstraints()
         loadBooks()
     }
     
+    // MARK: - Setup
+    private func setupView() {
+        view.backgroundColor = .systemBackground
+        view.addSubview(mainView)
+    }
+    
+    private func setupConstraints() {
+        mainView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+    }
     
     // MARK: - 데이터 로딩
-    
     private func loadBooks() {
         dataService.loadBooks { [weak self] result in
             guard let self = self else { return }
@@ -36,6 +44,7 @@ class ViewController: UIViewController {
                 switch result {
                 case .success(let books):
                     print("책 정보 불러왔음")
+                    self.books = books
                     self.mainView.configureView(books: books)
                 case .failure(let error):
                     self.handleError(error)
@@ -44,9 +53,7 @@ class ViewController: UIViewController {
         }
     }
     
-    
     // MARK: - 에러 핸들링
-    
     private func handleError(_ error: Error) {
         let message: String
         

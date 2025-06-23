@@ -8,41 +8,39 @@
 import UIKit
 import SnapKit
 
-class MainView: UIView, HeaderViewDelegate {
+/// 메인 뷰
+final class MainView: UIView {
     
+    // MARK: - Properties
     private var books: [Book] = []
     private var selectedBookVolumeNumber: Int = 0
-    private let headerView = HeaderView()
-    private let contentView = ContentView()
     
+    // MARK: - Subviews
+    private let headerView = HeaderView() // 헤더 뷰 - 최상단 제목, 시리즈 버튼
+    private let contentView = ContentView() // 컨텐츠 뷰 - 책 기본정보, 헌정사, 요약, 목차
+    
+    // MARK: - Initializer
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        backgroundColor = .systemBackground
-        
-        headerView.delegate = self
-        
-        addSubview(headerView)
-        addSubview(contentView)
-        
-        setupHeaderAndContentsConstraints()
-        
+        setupView()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    /// [Book] 입력을 받아 헤더 뷰와 컨텐츠 뷰를 구성
-    func configureView(books: [Book]) {
-        self.books = books
-        headerView.configureView(books, selectedBookVolumeNumber)
-        contentView.configureView(books[selectedBookVolumeNumber], selectedBookVolumeNumber)
+    // MARK: - Setup
+    private func setupView() {
+        backgroundColor = .systemBackground
         
+        headerView.delegate = self
+        
+        addSubview(headerView)
+        addSubview(contentView)
     }
     
-    /// 헤더 뷰와 컨텐츠 뷰의 제약 설정
-    private func setupHeaderAndContentsConstraints() {
+    private func setupConstraints() {
         headerView.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide).inset(10)
             $0.leading.trailing.equalTo(safeAreaLayoutGuide).inset(20)
@@ -55,9 +53,22 @@ class MainView: UIView, HeaderViewDelegate {
         }
     }
     
-    /// 헤더 뷰의 시리즈 버튼이 눌렸을 때
+    // MARK: - Configuration
+    func configureView(books: [Book]) {
+        self.books = books
+        updateViews()
+    }
+    
+    private func updateViews() {
+        headerView.configureView(books: books, bookVolumeNumber: selectedBookVolumeNumber)
+        contentView.configureView(book: books[selectedBookVolumeNumber], bookVolumeNumber: selectedBookVolumeNumber)
+    }
+}
+
+// MARK: - HeaderViewDelegate
+extension MainView: HeaderViewDelegate { // 델리게이트 이벤트 핸들링
     func didTapSeriesButton(bookVolumeNumber: Int) {
         selectedBookVolumeNumber = bookVolumeNumber
-        configureView(books: books)
+        updateViews()
     }
 }

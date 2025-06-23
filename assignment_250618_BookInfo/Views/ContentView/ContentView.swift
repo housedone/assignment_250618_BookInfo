@@ -8,14 +8,23 @@
 import UIKit
 import SnapKit
 
-class ContentView: UIView {
+/// 컨텐츠 뷰
+final class ContentView: UIView {
     
-    private let scrollView = UIScrollView() // 맨 바깥 스크롤뷰
-    private let contentStackView = UIStackView() // 스크롤뷰 내부 스택뷰
+    // MARK: - UI Components
+    private let scrollView = UIScrollView()
+    private let contentStackView = UIStackView()
     
+    // MARK: - Subviews
+    private let bookInfoView = BookBasicInfoView() // 책 기본정보
+    private let dedicationView = DedicationView() // 헌정사
+    private let summaryView = SummaryView() // 요약
+    private let chapterListView = ChapterListView() // 목차
+    
+    // MARK: - Initializer
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupViews()
+        setupView()
         setupConstraints()
     }
     
@@ -23,16 +32,25 @@ class ContentView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    /// 서브 뷰로 추가하며 속성 설정
-    private func setupViews() {
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.addSubview(contentStackView)
+    // MARK: - Setup
+    private func setupView() {
+        backgroundColor = .white
+        
         addSubview(scrollView)
+        scrollView.addSubview(contentStackView)
+        scrollView.showsVerticalScrollIndicator = false
+        
         contentStackView.axis = .vertical
         contentStackView.spacing = 24
+        
+        // 스택뷰에 하위 뷰 순서대로 미리 배치
+        contentStackView.addArrangedSubview(bookInfoView)
+        contentStackView.addArrangedSubview(dedicationView)
+        contentStackView.addArrangedSubview(summaryView)
+        contentStackView.addArrangedSubview(chapterListView)
     }
     
-    /// 제약 설정
+    // MARK: - Constraints
     private func setupConstraints() {
         scrollView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -45,13 +63,11 @@ class ContentView: UIView {
         }
     }
     
-    func configureView(_ book: Book, _ bookVolumeNumber: Int) {
-        contentStackView.arrangedSubviews.forEach { $0.removeFromSuperview() } // 갱신하며 기존 서브뷰 제거
-        
-        contentStackView.addArrangedSubview(BookBasicInfoView(book: book, bookVolumeNumber: bookVolumeNumber))
-        contentStackView.addArrangedSubview(DedicationView(title: "Dedication", value: book.dedication))
-        contentStackView.addArrangedSubview(SummaryView(title: "Summary", value: book.summary, bookVolumeNumber: bookVolumeNumber))
-        contentStackView.addArrangedSubview(ChapterListView(title: "Chapter", value: book.chapters))
-        
+    // MARK: - Configuration
+    func configureView(book: Book, bookVolumeNumber: Int) {
+        bookInfoView.configure(book: book, bookVolumeNumber: bookVolumeNumber)
+        dedicationView.configure(title: "Dedication", value: book.dedication)
+        summaryView.configure(title: "Summary", value: book.summary, bookVolumeNumber: bookVolumeNumber)
+        chapterListView.configure(title: "Chapters", chapters: book.chapters)
     }
 }

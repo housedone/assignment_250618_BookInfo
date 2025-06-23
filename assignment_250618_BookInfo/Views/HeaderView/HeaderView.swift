@@ -12,26 +12,28 @@ protocol HeaderViewDelegate: AnyObject {
     func didTapSeriesButton(bookVolumeNumber: Int)
 }
 
-class HeaderView: UIView {
+/// 헤더 뷰
+final class HeaderView: UIView {
     
+    // MARK: - Delegate
     weak var delegate: HeaderViewDelegate?
     
-    private let topTitleLabel = UILabel()
-    private let seriesButtonStackView = UIStackView()
+    // MARK: - UI Components
+    private let topTitleLabel = UILabel() // 최상단 제목
+    private let seriesButtonStackView = UIStackView() // 시리즈 버튼
     
+    // MARK: - Initializer
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         setupViews()
         setupConstraints()
-        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    /// 서브 뷰로 추가하며 속성 설정
+    // MARK: - Setup
     private func setupViews() {
         addSubview(topTitleLabel)
         addSubview(seriesButtonStackView)
@@ -44,13 +46,11 @@ class HeaderView: UIView {
         seriesButtonStackView.spacing = 8
         seriesButtonStackView.alignment = .center
         seriesButtonStackView.distribution = .equalSpacing
-        
     }
     
-    /// 제약 설정
     private func setupConstraints() {
         topTitleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview() // 헤더 뷰 탑 제약이 10이 이미 있으므로
+            $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview()
         }
         
@@ -61,35 +61,15 @@ class HeaderView: UIView {
         }
     }
     
-    /// 책 리스트와 책 권차를 받아와 뷰 구성
-    /// (스위프트의 배열은 COW: Copy On Write이기 때문에 책 한 권만 넘기는 식으로 구현할 필요는 없다)
-    func configureView(_ books: [Book], _ bookVolumeNumber: Int) {
+    // MARK: - Configuration
+    func configureView(books: [Book], bookVolumeNumber: Int) {
         topTitleLabel.text = books[bookVolumeNumber].title
-        
-        // 갱신하며 기존 서브뷰 제거
         seriesButtonStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         
         for index in 0..<books.count {
-            let seriesButton = UIButton()
-            seriesButton.setTitle("\(index + 1)", for: .normal)
-            seriesButton.titleLabel?.font = .systemFont(ofSize: 16)
-            seriesButton.setTitleColor(index == bookVolumeNumber ? .white : .systemBlue, for: .normal)
-            seriesButton.backgroundColor = index == bookVolumeNumber ? .systemBlue : .systemGray6
-            seriesButton.tag = index
-            seriesButton.layer.cornerRadius = 20
-            seriesButton.addTarget(self, action: #selector(seriesButtonTapped), for: .touchUpInside)
-            
-            seriesButton.snp.makeConstraints {
-                $0.width.height.equalTo(40)
-            }
-            
-            seriesButtonStackView.addArrangedSubview(seriesButton)
+            let button = SeriesButtonView(index: index, isSelected: index == bookVolumeNumber)
+            button.delegate = delegate
+            seriesButtonStackView.addArrangedSubview(button)
         }
     }
-    
-    @objc
-    func seriesButtonTapped(_ sender: UIButton) {
-        delegate?.didTapSeriesButton(bookVolumeNumber: sender.tag)
-    }
-    
 }

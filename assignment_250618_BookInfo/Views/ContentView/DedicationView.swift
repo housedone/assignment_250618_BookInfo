@@ -8,21 +8,31 @@
 import UIKit
 import SnapKit
 
-/// Dedication 버티컬 스택 뷰
-class DedicationView: UIStackView {
+/// 헌정사 뷰
+final class DedicationView: UIStackView {
     
-    init(title: String, value: String) {
+    // MARK: - Properties
+    private let titleLabel = UILabel()
+    private let valueLabel = UILabel()
+    
+    // MARK: - Initializer
+    init() {
         super.init(frame: .zero)
+        setupView()
+    }
+    
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Setup
+    private func setupView() {
         axis = .vertical
         spacing = 8
         
-        let titleLabel = UILabel()
-        titleLabel.text = title
         titleLabel.font = .boldSystemFont(ofSize: 18)
         titleLabel.textColor = .black
         
-        let valueLabel = UILabel()
-        valueLabel.text = value
         valueLabel.font = .systemFont(ofSize: 14)
         valueLabel.textColor = .darkGray
         valueLabel.numberOfLines = 0
@@ -31,7 +41,9 @@ class DedicationView: UIStackView {
         addArrangedSubview(valueLabel)
     }
     
-    required init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    // MARK: - Configuration
+    func configure(title: String, value: String) {
+        titleLabel.text = title
+        valueLabel.text = value
     }
 }
