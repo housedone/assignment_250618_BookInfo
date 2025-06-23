@@ -27,7 +27,6 @@ class MainView: UIView, HeaderViewDelegate {
         
         setupHeaderAndContentsConstraints()
         
-        
     }
     
     required init?(coder: NSCoder) {
@@ -39,12 +38,13 @@ class MainView: UIView, HeaderViewDelegate {
         self.books = books
         headerView.configureView(books, selectedBookVolumeNumber)
         contentView.configureView(books[selectedBookVolumeNumber], selectedBookVolumeNumber)
+        
     }
     
     /// 헤더 뷰와 컨텐츠 뷰의 제약 설정
     private func setupHeaderAndContentsConstraints() {
         headerView.snp.makeConstraints {
-            $0.top.equalTo(safeAreaLayoutGuide).inset(10) // 나중에 다시 볼 필요 있음
+            $0.top.equalTo(safeAreaLayoutGuide).inset(10)
             $0.leading.trailing.equalTo(safeAreaLayoutGuide).inset(20)
         }
         
@@ -55,6 +55,7 @@ class MainView: UIView, HeaderViewDelegate {
         }
     }
     
+    /// 헤더 뷰의 시리즈 버튼이 눌렸을 때
     func didTapSeriesButton(bookVolumeNumber: Int) {
         selectedBookVolumeNumber = bookVolumeNumber
         configureView(books: books)

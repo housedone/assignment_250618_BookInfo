@@ -17,6 +17,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         view.addSubview(mainView)
+        
         mainView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
@@ -31,14 +32,14 @@ class ViewController: UIViewController {
         dataService.loadBooks { [weak self] result in
             guard let self = self else { return }
             
-            switch result {
-            case .success(let books):
-                print("책 정보 불러왔음")
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let books):
+                    print("책 정보 불러왔음")
                     self.mainView.configureView(books: books)
+                case .failure(let error):
+                    self.handleError(error)
                 }
-            case .failure(let error):
-                self.handleError(error)
             }
         }
     }

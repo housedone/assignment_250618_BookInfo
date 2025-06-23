@@ -24,13 +24,14 @@ class HeaderView: UIView {
         
         setupViews()
         setupConstraints()
+        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+    /// 서브 뷰로 추가하며 속성 설정
     private func setupViews() {
         addSubview(topTitleLabel)
         addSubview(seriesButtonStackView)
@@ -46,6 +47,7 @@ class HeaderView: UIView {
         
     }
     
+    /// 제약 설정
     private func setupConstraints() {
         topTitleLabel.snp.makeConstraints {
             $0.top.equalToSuperview() // 헤더 뷰 탑 제약이 10이 이미 있으므로
@@ -59,10 +61,13 @@ class HeaderView: UIView {
         }
     }
     
+    /// 책 리스트와 책 권차를 받아와 뷰 구성
+    /// (스위프트의 배열은 COW: Copy On Write이기 때문에 책 한 권만 넘기는 식으로 구현할 필요는 없다)
     func configureView(_ books: [Book], _ bookVolumeNumber: Int) {
         topTitleLabel.text = books[bookVolumeNumber].title
         
-        seriesButtonStackView.arrangedSubviews.forEach { $0.removeFromSuperview() } // 갱신하며 기존 서브뷰 제거
+        // 갱신하며 기존 서브뷰 제거
+        seriesButtonStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         
         for index in 0..<books.count {
             let seriesButton = UIButton()
