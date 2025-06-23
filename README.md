@@ -62,8 +62,8 @@
 
 ## **스크린샷**
 
-> (프로젝트 완성 후 스크린샷 첨부)
-> 
+> <img width="568" alt="스크린샷 2025-06-23 20 48 14" src="https://github.com/user-attachments/assets/87331474-ad39-485f-be76-cd72708814e6" />
+
 
 ---
 
