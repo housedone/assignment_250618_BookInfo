@@ -8,10 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		367FF5C72E025EA400B163D3 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 367FF5C62E025EA400B163D3 /* SnapKit */; };
+		36DD4BD02E0975FC008C9C34 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 36DD4BCF2E0975FC008C9C34 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		367FF5A72E025C5C00B163D3 /* assignment_250618_BookInfo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = assignment_250618_BookInfo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		36DD4BCF2E0975FC008C9C34 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -52,6 +54,7 @@
 			children = (
 				367FF5A92E025C5C00B163D3 /* assignment_250618_BookInfo */,
 				367FF5A82E025C5C00B163D3 /* Products */,
+				36DD4BCF2E0975FC008C9C34 /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -131,6 +134,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36DD4BD02E0975FC008C9C34 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
